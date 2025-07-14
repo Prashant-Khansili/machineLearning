@@ -1,0 +1,7 @@
+path: M:/IOT_Lab/IoT_Lab_ML/lemon_dataset
+train: images/train
+val: images/val
+
+names:
+  0: ripe_lemons
+  1: unripe_lemons
