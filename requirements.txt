@@ -1,0 +1,10 @@
+ipykernel
+numpy
+tensorflow
+keras
+pandas
+matplotlib
+seaborn
+onnxruntime
+ultralytics
+labelImg
