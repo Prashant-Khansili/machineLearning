@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">
+                    <i class="fas fa-upload me-2"></i>Upload Lemon Image
+                </h3>
+            </div>
+            <div class="card-body">
+                <form method="post" action="{% url 'predict' %}" enctype="multipart/form-data" class="upload-form">
+                    {% csrf_token %}
+                    <div class="mb-4 text-center">
+                        <div class="upload-area p-4 border rounded text-center">
+                            <i class="fas fa-cloud-upload-alt fa-3x text-primary mb-3"></i>
+                            <h5>Drag & drop image here</h5>
+                            <p class="text-muted">or click to browse files</p>
+                            {{ form.image }}
+                        </div>
+                        <div class="preview-container mt-3 d-none">
+                            <h6>Preview:</h6>
+                            <img id="image-preview" class="img-fluid rounded d-none" style="max-height: 250px;">
+                        </div>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-robot me-2"></i>Check Ripeness
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-secondary text-white">
+                <h3 class="mb-0">
+                    <i class="fas fa-history me-2"></i>All Predictions
+                    {% if recent_predictions %}
+                        <span class="badge bg-light text-dark ms-2">{{ recent_predictions|length }}</span>
+                    {% endif %}
+                </h3>
+            </div>
+            <div class="card-body p-0" style="max-height: 500px; overflow-y: auto;">
+                {% if recent_predictions %}
+                    <div class="list-group list-group-flush">
+                        {% for prediction in recent_predictions %}
+                            <div class="list-group-item">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0">
+                                        <img src="{{ prediction.image.url }}" class="rounded" alt="Lemon Image" width="80" height="80" style="object-fit: cover;">
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h5 class="mb-1">
+                                            <span class="badge bg-{% if prediction.prediction == 'Ripened' %}success{% else %}warning{% endif %}">
+                                                {{ prediction.prediction }}
+                                            </span>
+                                        </h5>
+                                        <p class="mb-1">Confidence: {{ prediction.confidence|floatformat:2 }}</p>
+                                        <small class="text-muted">{{ prediction.uploaded_at|date:"M d, Y H:i" }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center p-4">
+                        <i class="fas fa-info-circle fa-2x text-muted mb-3"></i>
+                        <p>No predictions yet. Upload an image to get started!</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
