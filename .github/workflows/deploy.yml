@@ -15,8 +15,8 @@ jobs:
     - name: Setup SSH
       run: |
         mkdir -p ~/.ssh
-        echo "${{ secrets.lightsail_ssh_key }}" > ~/.ssh/id_rsa_github
-        chmod 600 ~/.ssh/id_rsa_github
+        echo "${{ secrets.LIGHTSAIL_SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -H 13.202.248.226 >> ~/.ssh/known_hosts
 
     - name: Deploy via SSH
