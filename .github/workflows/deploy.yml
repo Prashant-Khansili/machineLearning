@@ -21,7 +21,7 @@ jobs:
 
     - name: Deploy via SSH
       run: |
-        ssh -i ~/.ssh/id_rsa bitnami@13.202.248.226 bash -c "
+        ssh -i ~/.ssh/id_rsa_github bitnami@13.202.248.226 bash -c "
           cd /var/www/html/lemon_classifier_web &&
           git pull origin main &&
           source /opt/bitnami/python/bin/activate &&
